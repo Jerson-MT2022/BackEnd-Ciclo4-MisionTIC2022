@@ -1,7 +1,7 @@
-package com.ochobits.retouno.repository;
+package com.retoDos.repository;
 
-import com.ochobits.retouno.repository.crud.UserCrudRepository;
-import com.ochobits.retouno.model.User;
+import com.retoDos.model.User;
+import com.retoDos.repository.crud.UserCrudRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,30 +9,42 @@ import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author estdiag
+ * @author estdiazg
  */
 @Repository
 public class UserRepository {
- @Autowired
- private UserCrudRepository userCrudRepository;
- 
- public List<User> getAll(){
- return (List<User>) userCrudRepository.findAll();
-         }
- 
- public Optional<User> getUser(int id){
- return  userCrudRepository.findById(id);
-         }
- public User save (User user){
- return  userCrudRepository.save(user);
-         }
- public boolean existeEmail (String email){
-     Optional <User> usuario = userCrudRepository.findByEmail(email);
-     return  !usuario.isEmpty();
-         }
- public Optional <User> autenticarUsuario (String email, String password){
- return userCrudRepository.findByEmailAndPassword(email, password);
- }
- 
- 
+
+    @Autowired
+    private UserCrudRepository crudInterface;
+
+    public Optional<User> getUser(int id) {
+        return crudInterface.findById(id);
+    }
+
+    public User create(User user) {
+        return crudInterface.save(user);
+    }
+
+    public void update(User user) {
+        crudInterface.save(user);
+    }
+
+    public List<User> listar() {
+        return crudInterface.findAll();
+    }
+
+    public boolean existeEmail(String email) {
+        //Optional<User> usuario = crudInterface.findByEmail(email);
+
+        //return !usuario.isEmpty();
+        return false;
+    }
+
+    public Optional<User> autenticaUser(String email, String password) {
+        return crudInterface.findEmailAndPassword(email, password);
+    }
+    
+    public void delete(User user) {
+        crudInterface.delete(user);
+    }
 }

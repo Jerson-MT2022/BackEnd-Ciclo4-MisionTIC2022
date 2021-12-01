@@ -1,17 +1,19 @@
+package com.retoDos.repository.crud;
 
-package com.ochobits.retouno.repository.crud;
-
-import com.ochobits.retouno.model.User;
+import com.retoDos.model.User;
 import java.util.Optional;
 import org.springframework.data.mongodb.repository.MongoRepository;
-//import org.springframework.data.repository.CrudRepository;
 
 /**
  *
  * @author estdiag
  */
 public interface UserCrudRepository extends MongoRepository<User, Integer>{
-    Optional<User> findByEmail(String email);
-    Optional<User> findByEmailAndPassword(String email, String password);
     
+    //Optional<User> findByEmail(String email);
+    Optional<User> findEmailAndPassword(String email, String password); 
+    
+    User findByEmail(String email);
+    //User findEmailAndPassword(String email, String password);    
 }
+
