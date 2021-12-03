@@ -1,31 +1,54 @@
 
-package com.retoDos.model;
+package com.ochobits.retouno.model;
 
+import javax.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
 /**
  *
  * @author estdiag
  */
-        
+
 @Document(collection = "users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 
 public class User {
-@Id
-private Integer id;
-private String identification;
-private String name;
-private String address;
-private String cellPhone;
-private String email;
-private String password;
-private String zone;
-private String type;
+
+    
+    @Id
+    private Integer id;
+    @NonNull
+    @Column (name= "user_identification", nullable=false)
+    private String identification;
+    @NonNull
+    @Column (name= "user_name", nullable = false, length =80)
+    private String name;
+    @NonNull
+    @Column (name= "user_address", nullable = false)
+    private String address;
+    @NonNull
+    @Column (name= "user_cellPhone", nullable = false)
+    private String cellPhone;
+    @NonNull
+    @Column (name= "user_email", nullable = false, length =50) 
+    private String email;
+    @NonNull
+    @Column (name= "user_password", nullable = false, length =50) 
+    private String password;
+    @NonNull
+    @Column (name= "user_zone", nullable = false)
+    private String zone;
+    @NonNull
+    @Column (name= "user_type", nullable = false)
+    private String type;
+    
+    
+    
+    
 }

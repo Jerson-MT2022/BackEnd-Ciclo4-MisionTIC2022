@@ -1,12 +1,12 @@
-package com.retoDos.service;
 
-import com.retoDos.model.User;
-import com.retoDos.repository.UserRepository;
+package com.ochobits.retouno.service;
+
+import com.ochobits.retouno.model.User;
+import com.ochobits.retouno.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  *
@@ -16,34 +16,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class UserService {
 
     @Autowired
-    private UserRepository repositorio;
+    private UserRepository userRepository;
 
     public List<User> listar() {
-        return repositorio.listar();
+        return userRepository.listar();
     }
 
-    public boolean existeEmail(String email) {
-        return repositorio.existeEmail(email);
-    }
+    public Optional<User> getUser(int id) {
+        return userRepository.getUser(id);
 
-    public User autenticaUser(String email, String password) {
-        Optional<User> usuario = repositorio.autenticaUser(email, password);
-
-        if (usuario.isEmpty()) {
-            return new User();
-        } else {
-            return usuario.get();
-        }
     }
 
     public User create(User user) {
         if (user.getId() == null) {
             return user;
         } else {
-            Optional<User> e = repositorio.getUser(user.getId());
+            Optional<User> e = userRepository.getUser(user.getId());
             if (e.isEmpty()) {
                 if (existeEmail(user.getEmail()) == false) {
-                    return repositorio.create(user);
+                    return userRepository.create(user);
                 } else {
                     return user;
                 }
@@ -53,9 +44,22 @@ public class UserService {
         }
     }
 
+   public boolean existeEmail(String email) {
+        return userRepository.existeEmail(email);
+    }
+
+    public User autenticaUser(String email, String password) {
+        Optional<User> usuario = userRepository.autenticaUser(email, password);
+
+        if (usuario.isEmpty()) {
+            return new User();
+        } else {
+            return usuario.get();
+        }
+    }
     public User update(User user) {
         if (user.getId() != null) {
-            Optional<User> userDb = repositorio.getUser(user.getId());
+            Optional<User> userDb = userRepository.getUser(user.getId());
             if (!userDb.isEmpty()) {
                 if (user.getIdentification() != null) {
                     userDb.get().setIdentification(user.getIdentification());
@@ -78,7 +82,7 @@ public class UserService {
                 if (user.getZone() != null) {
                     userDb.get().setZone(user.getZone());
                 }
-                repositorio.update(userDb.get());
+                userRepository.update(userDb.get());
                 return userDb.get();
             } else {
                 return user;
@@ -87,15 +91,16 @@ public class UserService {
             return user;
         }
     }
-    
     public boolean delete(int id) {
-        Optional<User> usuario = repositorio.getUser(id);
+        Optional<User> usuario = userRepository.getUser(id);
 
         if (usuario.isEmpty()) {
             return false;
         } else {
-            repositorio.delete(usuario.get());
+            userRepository.delete(usuario.get());
             return true;
         }
     }
+    
+
 }

@@ -1,11 +1,12 @@
 
-package com.retoDos.controller;
+package com.ochobits.retouno.controller;
 
-import com.retoDos.model.User;
-import com.retoDos.service.UserService;
+import com.ochobits.retouno.model.User;
+import com.ochobits.retouno.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,41 +23,40 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping ("/api/user")
+@RequestMapping("/api/user")
+@CrossOrigin("*")
 public class UserController {
-    @Autowired
-    private UserService servicio;
-    
-    @GetMapping("/all")
+ @Autowired
+ private UserService userService;
+ 
+@GetMapping("/all")
     public List <User> listar(){
-        return servicio.listar();
+        return userService.listar();
     }
-    
-    @GetMapping("/emailexist/{email}")
-    public boolean existeEmail(@PathVariable("email")String email){
-         return servicio.existeEmail(email);
-    }
-    
-    @GetMapping("/{email}/{password}")
-    public User autenticaUser(@PathVariable("email") String email,@PathVariable("password") String password){    
-        return servicio.autenticaUser(email,password);
-    }
-    
-    @PostMapping("/new")
+ 
+ @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
     public User create (@RequestBody User user){
-    return servicio.create(user);
+    return userService.create(user);
     }
-    
+ 
+ @GetMapping("/{email}/{password}")
+ public User autenticaUser (@PathVariable("email") String email,@PathVariable("password") String password){
+     return userService.autenticaUser(email,password);
+ 
+ }
+ @GetMapping("/emailexist/{email}")
+    public boolean existeEmail(@PathVariable("email")String email){
+         return userService.existeEmail(email);
+    }
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
     public User update (@RequestBody User user){
-    return servicio.update(user);
+    return userService.update(user);
             }
-    
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public boolean delete (@PathVariable("id")int id){
-    return servicio.delete(id);
+    return userService.delete(id);
     }
 }
