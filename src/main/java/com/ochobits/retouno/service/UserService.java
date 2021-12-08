@@ -17,6 +17,9 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+    
+    @Autowired
+    private SequenceGeneratorService sequenceGenerator; 
 
     public List<User> listar() {
         return userRepository.listar();
@@ -29,11 +32,12 @@ public class UserService {
 
     public User create(User user) {
         if (user.getId() == null) {
-            return user;
+            user.setId(sequenceGenerator.generateSequence(user.SEQUENCE_NAME));
+            return userRepository.create(user);
         } else {
             Optional<User> e = userRepository.getUser(user.getId());
             if (e.isEmpty()) {
-                if (existeEmail(user.getEmail()) == false) {
+                if (!existeEmail(user.getEmail())) {
                     return userRepository.create(user);
                 } else {
                     return user;

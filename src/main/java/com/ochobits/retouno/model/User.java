@@ -2,6 +2,7 @@
 package com.ochobits.retouno.model;
 
 import javax.persistence.Column;
+import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 public class User {
 
+    @Transient
+    public static final String SEQUENCE_NAME = "users_sequence";
     
     @Id
     private Integer id;

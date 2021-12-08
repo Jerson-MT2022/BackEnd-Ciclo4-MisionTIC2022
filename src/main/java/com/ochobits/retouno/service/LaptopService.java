@@ -21,13 +21,17 @@ public class LaptopService {
 
     @Autowired
     private LaptopRepository laptopRepository;
-
+    
+    @Autowired
+    private SequenceGeneratorService sequenceGenerator; 
+    
     public List<Laptop> getAll() {
         return laptopRepository.getAll();
     }
 
     public Laptop save(Laptop laptop) {
         if (laptop.getId() == null) {
+            laptop.setId(sequenceGenerator.generateSequence(laptop.SEQUENCE_NAME));
             return laptopRepository.save(laptop);
         } else {
             Optional<Laptop> laptop1 = laptopRepository.getLaptop(laptop.getId());
