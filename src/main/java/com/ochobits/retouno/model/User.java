@@ -1,6 +1,7 @@
 
 package com.ochobits.retouno.model;
 
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
@@ -27,28 +28,34 @@ public class User {
     @Id
     private Integer id;
     @NonNull
-    @Column (name= "user_identification", nullable=false)
+    @Column (nullable=false)
     private String identification;
     @NonNull
-    @Column (name= "user_name", nullable = false, length =80)
+    @Column (nullable = false, length =80)
     private String name;
     @NonNull
-    @Column (name= "user_address", nullable = false)
+    @Column (nullable = false)
+    private Date birthtDay;
+    @NonNull
+    @Column (nullable = false)
+    private Integer monthBirthtDay;
+    @NonNull
+    @Column (nullable = false)
     private String address;
     @NonNull
-    @Column (name= "user_cellPhone", nullable = false)
+    @Column (nullable = false)
     private String cellPhone;
     @NonNull
-    @Column (name= "user_email", nullable = false, length =50) 
+    @Column (nullable = false, length =50) 
     private String email;
     @NonNull
-    @Column (name= "user_password", nullable = false, length =50) 
+    @Column (nullable = false, length =50) 
     private String password;
     @NonNull
-    @Column (name= "user_zone", nullable = false)
+    @Column (nullable = false)
     private String zone;
     @NonNull
-    @Column (name= "user_type", nullable = false)
+    @Column (nullable = false)
     private String type;
     
     
