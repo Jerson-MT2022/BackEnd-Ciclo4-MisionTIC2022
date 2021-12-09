@@ -38,7 +38,7 @@ public class User {
     private Date birthtDay;
     @NonNull
     @Column (nullable = false)
-    private Integer monthBirthtDay;
+    private String monthBirthtDay;
     @NonNull
     @Column (nullable = false)
     private String address;
