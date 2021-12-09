@@ -3,6 +3,7 @@ package com.ochobits.retouno.service;
 import com.ochobits.retouno.model.Laptop;
 import com.ochobits.retouno.model.Order;
 import com.ochobits.retouno.repository.OrderRepository;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,5 +79,17 @@ public class OrderService {
 
     public List<Order> getOrderByZona(String zona) {
         return orderRepository.getOrderByZona(zona);
+    }
+
+    public List<Order> getOrderBySalesman(int id) {
+       return orderRepository.getOrderBySalesman(id);
+    }
+
+    public List<Order> getOrdersByDate(Date queryDate, int id) {
+        return orderRepository.getOrdersByDate(queryDate, id);
+    }
+
+    public List<Order> getOrdersByState(String state, int id) {
+        return orderRepository.getOrdersByState(state, id);
     }
 }

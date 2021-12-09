@@ -3,6 +3,8 @@ package com.ochobits.retouno.controller;
 
 import com.ochobits.retouno.model.Order;
 import com.ochobits.retouno.service.OrderService;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,8 +65,29 @@ public class OrderController {
     }
     
     @GetMapping("/zona/{zona}")
-    public List<Order> getOrderbyZona (@PathVariable("zona")String zona){
-        List<Order> order = orderService.getOrderByZona(zona);
-        return order;        
+    public List<Order> getOrdersByZona (@PathVariable("zona")String zona){
+        return orderService.getOrderByZona(zona);
+    }
+    
+    @GetMapping("/salesman/{id}")
+    public List<Order> getOrdersBySalesman (@PathVariable("id")int id){
+        return orderService.getOrderBySalesman(id);
+    }
+    
+    @GetMapping("/date/{date}/{id}")
+    public List<Order> getOrdersByDate (@PathVariable("date")String date, 
+                                        @PathVariable("id")int id ){
+        try{
+            Date queryDate = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+            return orderService.getOrdersByDate(queryDate, id);
+        }catch(Exception e){
+            return null;
+        } 
+    }
+    
+    @GetMapping("/state/{state}/{id}")
+    public List<Order> getOrdersByState (@PathVariable("state")String state, 
+                                         @PathVariable("id")int id ){
+            return orderService.getOrdersByState(state, id);        
     }
 }

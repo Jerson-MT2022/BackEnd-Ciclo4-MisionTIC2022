@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.ochobits.retouno.model.Order;
+import java.util.Date;
 import org.springframework.data.mongodb.core.MongoOperations;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
@@ -45,5 +46,21 @@ public class OrderRepository {
 
     public List<Order> getOrderByZona(String zona) {
         return mongoOperations.find( query(where("salesMan.zone").is(zona)), Order.class);
+    }
+
+    public List<Order> getOrderBySalesman(int id) {
+        return mongoOperations.find( query(where("salesMan.id").is(id)), Order.class);
+    }
+
+    public List<Order> getOrdersByDate(Date date, int id) {
+        return mongoOperations.find(query(where("registerDay").is(date)
+                                    .andOperator(where("salesMan.id").is(id))),
+                                Order.class);
+    }
+    
+    public List<Order> getOrdersByState(String state, int id) {
+        return mongoOperations.find(query(where("status").is(state)
+                                    .andOperator(where("salesMan.id").is(id))),
+                                Order.class);
     }
 }
