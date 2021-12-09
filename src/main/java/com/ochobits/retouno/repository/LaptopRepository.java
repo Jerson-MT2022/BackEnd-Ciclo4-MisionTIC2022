@@ -36,5 +36,9 @@ public class LaptopRepository {
     public void delete(Laptop laptop){
         laptopCrudRepository.delete(laptop);
     }
+
+    public Optional<Laptop> findById(int id) {
+        return laptopCrudRepository.findById(id);
+    }
     
 }

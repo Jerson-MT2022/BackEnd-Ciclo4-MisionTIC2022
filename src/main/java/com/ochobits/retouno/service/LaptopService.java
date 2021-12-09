@@ -28,6 +28,13 @@ public class LaptopService {
     public List<Laptop> getAll() {
         return laptopRepository.getAll();
     }
+    
+    public Laptop getLaptop(int id) {
+        Optional<Laptop> laptop = laptopRepository.findById(id);
+        if(laptop.isPresent())
+            return laptop.get();
+        return null;
+    }
 
     public Laptop save(Laptop laptop) {
         if (laptop.getId() == null) {

@@ -33,12 +33,16 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin("*")
 public class LaptopController {
     @Autowired
-    
     private LaptopService laptopService;
     
-   @GetMapping("/all")
+    @GetMapping("/all")
     public List<Laptop> getAll(){
         return laptopService.getAll();
+    }
+    
+    @GetMapping("/{id}")
+    public Laptop getAll(@PathVariable int id){
+        return laptopService.getLaptop(id);
     }
     
     @PostMapping("/new")

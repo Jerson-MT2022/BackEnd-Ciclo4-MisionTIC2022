@@ -1,8 +1,8 @@
 
 package com.ochobits.retouno.controller;
 
-import com.ochobits.retouno.model.User;
-import com.ochobits.retouno.service.UserService;
+import com.ochobits.retouno.model.Order;
+import com.ochobits.retouno.service.OrderService;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,57 +20,51 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author estdiag
+ * @author jpere
  */
-
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/order")
 @CrossOrigin("*")
-public class UserController {
+public class OrderController {
     @Autowired
-    private UserService userService;
+    private OrderService orderService;
  
     @GetMapping("/all")
-    public List <User> listar(){
-        return userService.listar();
+    public List <Order> listar(){
+        return orderService.listar();
     }
  
     @PostMapping("/new")
     @ResponseStatus(HttpStatus.CREATED)
-    public User create (@RequestBody User user){
-    return userService.create(user);
-    }
- 
-    @GetMapping("/{email}/{password}")
-    public User autenticaUser (@PathVariable("email") String email,@PathVariable("password") String password){
-         return userService.autenticaUser(email,password);
-    }
-    
-    @GetMapping("/emailexist/{email}")
-    public boolean existeEmail(@PathVariable("email")String email){
-         return userService.existeEmail(email);
+    public Order create (@RequestBody Order order){
+    return orderService.create(order);
     }
     
     @PutMapping("/update")
     @ResponseStatus(HttpStatus.CREATED)
-    public User update (@RequestBody User user){
-        return userService.update(user);
+    public Order update (@RequestBody Order order){
+        return orderService.update(order);
     }
     
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public boolean delete (@PathVariable("id")int id){
-        return userService.delete(id);
+        return orderService.delete(id);
     }
     
     @GetMapping("/{id}")
-    public User getUserById (@PathVariable("id")int id){
-        Optional<User> user = userService.getUser(id);
+    public Order getOrderById (@PathVariable("id")int id){
+        Optional<Order> order = orderService.getOrder(id);
         
-        if(user.isPresent())
-            return user.get();
+        if(order.isPresent())
+            return order.get();
         
         return null;
-        
+    }
+    
+    @GetMapping("/zona/{zona}")
+    public List<Order> getOrderbyZona (@PathVariable("zona")String zona){
+        List<Order> order = orderService.getOrderByZona(zona);
+        return order;        
     }
 }
