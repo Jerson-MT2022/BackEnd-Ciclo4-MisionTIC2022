@@ -5,6 +5,9 @@ import com.ochobits.retouno.model.User;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoOperations;
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.query.Query.query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -16,6 +19,9 @@ public class UserRepository {
 
     @Autowired
     private UserCrudRepository userCrudRepository;
+
+    @Autowired
+    private MongoOperations mongoOperations;
 
     public List<User> listar() {
         return (List<User>) userCrudRepository.findAll();
@@ -47,6 +53,11 @@ public class UserRepository {
    
     public void delete(User user) {
         userCrudRepository.delete(user);
+    }
+
+    public List<User> getByBirthday(String month) {
+        return mongoOperations.find(query(where("monthBirthtDay")
+                                    .is(month)), User.class);
     }
 
 }

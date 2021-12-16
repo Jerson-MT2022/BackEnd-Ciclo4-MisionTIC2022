@@ -6,6 +6,7 @@
 package com.ochobits.retouno.service;
 
 import com.ochobits.retouno.model.Laptop;
+import com.ochobits.retouno.model.Order;
 import com.ochobits.retouno.repository.LaptopRepository;
 import java.util.List;
 import java.util.Optional;
@@ -85,5 +86,13 @@ public class LaptopService {
             return laptopRepository.save(laptopU.get());
         }
         return laptop;
+    }
+
+    public List<Laptop> getByPrice(int price) {
+        return laptopRepository.getByPrice(price);
+    }
+    
+    public List<Laptop> getByDescription(String description) {
+        return laptopRepository.getByDescription(description);
     }
 }

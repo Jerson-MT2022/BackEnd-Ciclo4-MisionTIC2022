@@ -6,12 +6,11 @@
 package com.ochobits.retouno.controller;
 
 import com.ochobits.retouno.model.Laptop;
+import com.ochobits.retouno.model.Order;
 import com.ochobits.retouno.service.LaptopService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -62,4 +60,14 @@ public class LaptopController {
         return laptopService.updateLaptop(laptop);
     }
     
+    @GetMapping("/price/{price}")
+    public List<Laptop> getByPrice(@PathVariable("price") int price){
+        return laptopService.getByPrice(price);
+    }
+    
+    @GetMapping("/description/{desc}")
+    public List<Laptop> getByDescription(@PathVariable("desc")String description)
+    {
+            return laptopService.getByDescription(description);        
+    }
 }
